@@ -114,3 +114,16 @@ $ docker run -d --name devtest -v myVol:/app nginx:latest
 &nbsp;
 
 - 컨테이너가 아닌 외부에 데이터를 저장하고 컨테이너는 그 데이터로 동작하도록 설계하는 것을 스테이트리스(stateless)라고 하며, 컨테이너 내부에 데이터를 저장하고 상태가 있는 경우 스테이트풀(stateful)하다고 합니다.
+
+&nbsp;
+# 참고 자료
+- [시작하세요! 도커/쿠버네티스 - YES24](http://www.yes24.com/Product/Goods/84927385)
+
+
+- [Docker Volume (호스트 볼륨 공유) -	컨테이너 데이터를 호스트 디스크에 저장하기](https://blog.naver.com/PostView.nhn?blogId=jevida&logNo=221449590567&categoryNo=131&parentCategoryNo=0&viewDate=&currentPage=2&postListTopCurrentPage=1&from=postList)
+
+
+- [Docker Volume (컨테이너 볼륨 공유) - 컨테이너 볼륨을 다른 컨테이너와 공유하기](https://blog.naver.com/PostView.nhn?blogId=jevida&logNo=221451346970&categoryNo=131&parentCategoryNo=0&viewDate=&currentPage=2&postListTopCurrentPage=1&from=postList)
+
+
+- [Docker Volume (도커 볼륨) - 도커 볼륨을 이용해서 데이터 공유하기](https://blog.naver.com/PostView.nhn?blogId=jevida&logNo=221457594486&categoryNo=131&parentCategoryNo=0&viewDate=&currentPage=1&postListTopCurrentPage=1&from=postList)
