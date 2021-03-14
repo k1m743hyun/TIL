@@ -15,4 +15,15 @@
 ## 5. `rm`
 
 &nbsp;
-## 6. `mod`
+## 6. `rmdir`
+
+&nbsp;
+## 7. `chmod`
+
+&nbsp;
+## 8. `pwd`
+
+&nbsp;
+## 9. `grep`
+
+&nbsp;
