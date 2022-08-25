@@ -52,5 +52,47 @@ $ vi ~/personal/.gitconfig
   email = k1m743hyun@icloud.com
 ```
 
+## SSH Key 생성
+회사용 SSH Key 생성
+```
+$ ssh-keygen -t rsa -b 4096 -C "k1m743hyun@gmail.com"
+```
+개인용 SSH Key 생성
+```
+$ ssh-keygen -t rsa -b 4096 -C "k1m743hyun@icloud.com"
+```
+
+## SSH Config 수정
+```
+$ vi ~/.ssh/config
+```
+```
+Host github.com-company
+  User git
+  Port 22
+  HostName github.com
+  IdentityFile ~/.ssh/id_rsa_company
+
+Host github.com-personal
+  User git
+  Port 22
+  HostName github.com
+  IdentityFile ~/.ssh/id_rsa_personal
+```
+
+### GitHub Repository Clone 받기
+회사용 Repository Clone
+```
+$ cd company
+$ git clone git@github.com-company:{user}/{your-repo-name}.git
+```
+개인용 Repository Clone
+```
+$ cd personal
+$ git clone git@github.com-personal:k1m743hyun/TIL.git
+```
+
+
 # 출처
 - [GitHub 멀티 어카운트를 사용할 때 유용한 Git 설정](https://www.lainyzine.com/ko/article/useful-git-settings-when-using-github-multi-account/)
+- [Handling Multiple Github Accounts on MacOS](https://gist.github.com/Jonalogy/54091c98946cfe4f8cdab2bea79430f9)
