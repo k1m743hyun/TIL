@@ -14,5 +14,22 @@
 - 기존 Code를 재사용함으로 추가적으로 동일한 Resource를 만들 때 쉽고 빠르게 적용할 수 있음
 
 
+## Terraform Directory Structure
+- 관점에 따라 
+
+
+### Environment 별로 나뉜 Directory Structure
+- 상위 Directory를 Environment 별로 나누는 방법
+
+![Separated Directory for Environment](./images/separated-directories-for-environment.png)
+
+
+### Component 별로 나뉜 Directory Structure
+- 상위 Directory를 Component 별로 나누는 방법
+
+![Separated Directory for Component](./images/separated-directories-for-component.png)
+
+
 # 출처
 - [Terraform 이란?](https://velog.io/@gentledev10/what-is-the-terraform)
+- [How to Create Terraform Multiple Environments](https://getbetterdevops.io/terraform-create-infrastructure-in-multiple-environments/)
