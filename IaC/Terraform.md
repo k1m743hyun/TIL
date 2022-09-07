@@ -15,19 +15,43 @@
 
 
 ## Terraform Directory Structure
-- 관점에 따라 
+- 관점에 따라 다르게 Directory Structure Strategy를 세울 수 있음
 
 
-### Environment 별로 나뉜 Directory Structure
+### [1] Environment 별로 나뉜 Directory Structure
 - 상위 Directory를 Environment 별로 나누는 방법
+
 
 ![Separated Directory for Environment](./images/separated-directories-for-environment.png)
 
 
-### Component 별로 나뉜 Directory Structure
+#### 장점
+- 환경 별로 독립적이고 구분이 가능함
+- 환경 별 계층을 세분화하여 커스터마이징할 수 있음
+- 원하지 않는 환경에 리소스를 생성하는 실수를 줄일 수 있음
+
+
+#### 단점
+- 새로운 환경을 구성할 때 파일이 중복되는 것은 불가피함
+- 하위 디렉토리 레벨이 깊어질 수 있음
+
+
+### [2] Component 별로 나뉜 Directory Structure
 - 상위 Directory를 Component 별로 나누는 방법
 
+
 ![Separated Directory for Component](./images/separated-directories-for-component.png)
+![Separated Directory for Component](./images/separated-directories-for-component2.png)
+
+
+#### 장점
+- 반복되는 환경에서 확장성이 있음
+- 단순함
+
+
+#### 단점
+- 원하지 않는 환경에 리소스를 생성하는 실수가 발생할 수 있음
+- 환경 별 계층을 커스터마이징하는 것이 불분명함
 
 
 # 출처
