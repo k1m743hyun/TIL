@@ -84,6 +84,40 @@
             - GCS에 저장된 module의 install을 위해서는 역시 credentials setting이 되어 있어야 함
 
 
+##### input variable arguments
+- module 사용 시에 Child module이 가지고 있는 input variables가 있다면 Parent module에서 해당 값들을 argument로 명시하여 configuration이 가능
+- 예제
+    - Child module
+        - main.tf
+            ```
+            resource "aws_security_group" "example" {
+                name        = var.name
+                description = var.description
+            }
+            ```
+        -  variables.tf
+            ```
+            variable "name" {
+                type = string
+            }
+            
+            variable "description" {
+                type    = string
+                default = null
+            }
+            ```
+    - Parent module
+        ```
+        module "example" {
+            source      = "./module"
+            name        = "example"
+            description = "example"
+        }
+        ```
+- 예제에서 확인할 수 있듯이 Child module의 `name`, `description` input variables가 Parent module에서 argument로 사용되어 값을 전달받고 있다는 것을 확인할 수 있음
+- `name`의 경우에는 필수 값으로 Parent module에서 명시하지 않으면 error가 발생하지만, `description`의 경우에는 optional 값으로 module 사용 시에 명시하지 않아도 문제 없이 default 값으로 설정
+
+
 ## Terraform directory structure
 - 관점에 따라 다르게 directory structure strategy를 세울 수 있음
 
