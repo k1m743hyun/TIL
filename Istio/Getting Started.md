@@ -95,3 +95,8 @@ $ kubectl get pod -n defalut
 ```
 kubectl exec "$(kubectl get pod -l app=ratings -o jsonpath='{.items[0].metadata.name}')" -c ratings -- curl -sS productpage:9080/productpage | grep -o "<title>.*</title>"
 ```
+
+
+# 출처
+- [Getting Started](https://istio.io/latest/docs/setup/getting-started/)
+- [Istio (이스티오) 튜토리얼](https://medium.com/@chanhyeonglee/istio-%EC%9D%B4%EC%8A%A4%ED%8B%B0%EC%98%A4-%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC-84d7d4b8eab)
