@@ -70,6 +70,7 @@ $ kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.5/sam
 ```
 
 - Using Curl when you installed
+
 ```
 $ kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
 ```
@@ -94,6 +95,45 @@ $ kubectl get pod -n defalut
 
 ```
 kubectl exec "$(kubectl get pod -l app=ratings -o jsonpath='{.items[0].metadata.name}')" -c ratings -- curl -sS productpage:9080/productpage | grep -o "<title>.*</title>"
+```
+
+
+## Open the application to outside traffic
+
+
+### Associate the sample application with the istio gateway
+
+- Using Brew when you installed
+
+```
+$ kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.5/samples/bookinfo/networking/bookinfo-gateway.yaml
+```
+
+- Using Curl when you installed
+
+```
+$ kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
+```
+
+
+### Check to create the istio gateway
+
+```
+$ kubectl get gateway
+```
+
+
+### Ensure that there are no issues with the configuration
+
+```
+$ istioctl analyze
+```
+
+
+## Verify to access the sample application
+
+```
+$ curl "http://127.0.0.1/productpage"
 ```
 
 
