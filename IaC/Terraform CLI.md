@@ -4,7 +4,7 @@
 ## Initializing Working Directories
 
 
-### init
+### `init`
 
 
 #### Usage
@@ -12,6 +12,7 @@
 ```
 $ terraform init [options]
 ```
+
 
 #### Options
 
@@ -25,11 +26,27 @@ $ terraform init [options]
 
 - `-upgrade`
 
+- `-reconfigure`
+    - This option disregards any existing configuration, preventing migration of any existing state
+
+
+#### Examples
+
+- Initialize the current working directory
+```
+$ terraform init
+```
+
+- Reconfigure
+```
+$ terraform init -reconfigure
+```
+
 
 ## Provisioning Infrastructure
 
 
-### plan
+### `plan`
 
 
 #### Usage
@@ -46,24 +63,31 @@ $ terraform plan [options]
 - `-replace=ADDRESS`
 
 - `-target=ADDRESS`
-    - 특정 리소스를 지정하는 옵션
+    - Filtering by Resource
 
 - `-var 'NAME=VALUE'`
 
 - `-var-file=FILENAME`
 
 
-## apply
+#### Examples
+
+- s
+```
+```
 
 
-### Usage
+### `apply`
+
+
+#### Usage
 
 ```
 $ terraform apply [options]
 ```
 
 
-### Options
+#### Options
 
 - `-auto-approve`
 
@@ -82,29 +106,43 @@ $ terraform apply [options]
 - `-parallelism=n`
 
 - `-target=ADDRESS`
-    - 특정 리소스만 지정하는 옵션
+    - Filtering by Resource
 
 
-## destroy
+#### Examples
+
+- f
+```
+```
 
 
-### Usage
+### `destroy`
+
+
+#### Usage
 
 ```
 $ terraform destroy [options]
 ```
 
 
-### Options
+#### Options
 
 - `-target=ADDRESS`
-    - 특정 리소스를 지정하는 옵션
+    - Filtering by Resource
+
+
+#### Examples
+
+- d
+```
+```
 
 
 ## Inspecting Infrastructure
 
 
-### state list
+### `state list`
 
 
 #### Usage
@@ -117,28 +155,33 @@ $ terraform state list [options][address...]
 #### Options
 
 - `-state=path`
+    - Path to the state file
+    - Defaults to `terraform.tfstate`
+    - Ignored when `remote state` is used
 
 - `-id=id`
+    - ID of resources to show
+    - Ignored when unset
 
 
 #### Examples
 
-- 모든 리소스 대상
+- All Resources
 ```
 $ terraform state list
 ```
 
-- 특정 리소스 대상
+- Filtering by Resource
 ```
 $ terraform state list aws_instance.bar
 ```
 
-- 특정 모듈 대상
+- Filtering by Module
 ```
 $ terraform state list module.elb
 ```
 
-- 특정 ID 대상
+- Filtering by ID
 ```
 $ terraform state list -id=sg-1234qwer
 ```
