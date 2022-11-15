@@ -55,6 +55,15 @@ END
 SELECT '1'::int
 SELECT CAST('1' AS INTEGER)
 ```
+- Oracle에서는 `LPAD` 인자로 INTEGER가 있어도 실행이 되지만, PostgreSQL에서는 실행되지 않는다
+```
+LPAD(TO_NUMBER(SUBSTR(VERSION, 9, 3)) + 1, 3, '0')
+
+|
+V
+
+LPAD(CAST(CAST(SUBSTR(VERSION, 9, 3) AS INTEGER) + 1 AS VARCHAR), 3, '0')
+```
 
 ## 8. `OUTER JOIN`
 - PostgreSQL에서는 ANSI SQL 표준을 사용
