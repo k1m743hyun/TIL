@@ -80,6 +80,38 @@ SELECT D.DNAME, E.EMP_NO
 FROM DEPT D LEFT OUTER JOIN EMP E
 ON D.DEPT_NO = E.DEPT_NO
 ```
+- `WHERE`문에 `(+)` 연산자가 두 개가 있는 경우
+```
+SELECT *
+FROM DEPT D,
+      ( SELECT
+            A.MEMBER_ID AS M_ID,
+            B.JOB_ID AS J_ID
+        FROM MEMBER A, JOB B
+        WHERE 1=1
+        AND A.MEMBER_ID = B.MEMBER_ID
+      ) T
+WHERE 1=1
+AND D.MEMBER_ID = T.M_ID (+)
+AND NVL(D.JOB_ID, '1') = T.J_ID (+)
+
+|
+V
+
+SELECT *
+FROM DEPT D
+      LEFT OUTER JOIN
+      ( SELECT
+            A.MEMBER_ID AS M_ID,
+            B.JOB_ID AS J_ID
+        FROM MEMBER A, JOB B
+        WHERE 1=1
+        AND A.MEMBER_ID = B.MEMBER_ID
+      ) T
+ON D.MEMBER_ID = T.M_ID
+AND NVL(D.JOB_ID, '1') = T.J_ID
+WHERE 1=1
+```
 
 ## 9. `MERGE INTO`
 - Query를 분리하여 처리
