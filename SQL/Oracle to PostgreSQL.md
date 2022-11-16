@@ -117,7 +117,50 @@ WHERE 1=1
 - Query를 분리하여 처리
 - 변경 방법
   - 조건이 맞는지(`MATCHED`)에 대한 `SELECT`문을 실행시켜서 결과값이 있으면 `UPDATE`문을 실행시켜 주고 결과값이 없으면 `INSERT`문을 실행
-  - `UPDATE`문을 실행해서 `UPDATE`가 일어나면 그대로 가고 `UPDATE`가 일어나지 않으면 `INSERT`문을 실행 
+  - `UPDATE`문을 실행해서 `UPDATE`가 일어나면 그대로 가고 `UPDATE`가 일어나지 않으면 `INSERT`문을 실행
+```
+MERGE
+INTO DEPT AS A USING (
+      SELECT 
+        '1' AS MEMBER_ID,
+        'CE' AS DEPT_ID,
+        'Computer Engineering' AS DEPT_NAME
+      ) AS B
+  ON A.MEMBER_ID = B.MEMBER_ID
+
+WHEN MATCHED THEN
+
+    UPDATE
+    SET 
+      A.DEPT_ID	= B.DEPT_ID ,
+      A.DEPT_NAME = B.DEPT_NAME
+      
+WHEN NOT MATCHED THEN
+
+    INSERT (DEPT_ID,
+          DEPT_NAME)
+    VALUES (B.DEPT_ID,
+          B.DEPT_NAME) 
+
+|
+V
+
+WITH upsert AS (
+  UPDATE DEPT
+  SET
+    DEPT_ID = 'CE',
+    DEPT_NAME = 'Computer Engineering'
+  WHERE 1=1
+  AND MEMBER_ID = '1'
+  RETURNING *
+)
+INSERT INTO DEPT
+  (DEPT_ID,
+  DEPT_NAME)
+SELECT 'CE',
+  'Computer Engineering'
+WHERE NOT EXISTS(SELECT * FROM upsert)
+```
 
 ## 10. `START WITH`문과 `CONNECT BY`문
 - Oracle의 `START WITH`문과 `CONNECT BY`문은 PostgreSQL에서 `WITH`를 사용한 `RECURSIVE` Query로 변경
