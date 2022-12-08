@@ -17,11 +17,11 @@ $ git config --global user.useConfigOnly true
 ## 특정 Directory 아래 저장소들의 사용자 정보 설정하기
   
 
-### 회사용 Directory `~/company`와 개인용 Directory `~/personal` 생성
+### 업무용 Directory `~/thkim0022`와 개인용 Directory `~/k1m743hyun` 생성
 ```
 $ cd ~
-$ mkdir company
-$ mkdir personal
+$ mkdir thkim0022
+$ mkdir k1m743hyun
 ```
   
 
@@ -30,29 +30,29 @@ $ mkdir personal
 $ vi ~/.gitconfig
 ```
 ```
-[includeIf "gitdir:~/company/"]
-  path = ~/company/.gitconfig
+[includeIf "gitdir:~/thkim0022/"]
+  path = ~/thkim0022/.gitconfig
   
-[includeIf "gitdir:~/personal/"]
-  path = ~/personal/.gitconfig
+[includeIf "gitdir:~/k1m743hyun/"]
+  path = ~/k1m743hyun/.gitconfig
 ```
   
 
-### 회사용 `.gitconfig`와 개인용 `.gitconfig` 사용자 정보 파일 생성
-회사용 `.gitconfig`
+### 업무용 `.gitconfig`와 개인용 `.gitconfig` 사용자 정보 파일 생성
+업무용 `.gitconfig`
 ```
-$ vi ~/company/.gitconfig
+$ vi ~/thkim0022/.gitconfig
 ```
 ```
 [user]
   name = Taehyun Kim
-  email = k1m743hyun@gmail.com
+  email = thkim0022@icloud.com
 ```
   
 
 개인용 `.gitconfig`
 ```
-$ vi ~/personal/.gitconfig
+$ vi ~/k1m743hyun/.gitconfig
 ```
 ```
 [user]
@@ -62,9 +62,9 @@ $ vi ~/personal/.gitconfig
   
 
 ## SSH Key 생성
-회사용 SSH Key 생성
+업무용 SSH Key 생성
 ```
-$ ssh-keygen -t rsa -b 4096 -C "k1m743hyun@gmail.com"
+$ ssh-keygen -t rsa -b 4096 -C "thkim0022@icloud.com"
 ```
   
 
@@ -78,32 +78,32 @@ $ ssh-keygen -t rsa -b 4096 -C "k1m743hyun@icloud.com"
 $ vi ~/.ssh/config
 ```
 ```
-Host github.com-company
+Host github.com-thkim0022
   User git
   Port 22
   HostName github.com
-  IdentityFile ~/.ssh/id_rsa_company
+  IdentityFile ~/.ssh/id_rsa_thkim0022
 
-Host github.com-personal
+Host github.com-k1m743hyun
   User git
   Port 22
   HostName github.com
-  IdentityFile ~/.ssh/id_rsa_personal
+  IdentityFile ~/.ssh/id_rsa_k1m743hyun
 ```
   
 
 ### GitHub Repository Clone 받기
-회사용 Repository Clone
+업무용 Repository Clone
 ```
-$ cd company
-$ git clone git@github.com-company:{user}/{your-repo-name}.git
+$ cd thkim0022
+$ git clone git@github.com-thkim0022:{user}/{your-repo-name}.git
 ```
   
 
 개인용 Repository Clone
 ```
-$ cd personal
-$ git clone git@github.com-personal:k1m743hyun/TIL.git
+$ cd k1m743hyun
+$ git clone git@github.com-k1m743hyun:k1m743hyun/TIL.git
 ```
   
   
