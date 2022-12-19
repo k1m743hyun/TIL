@@ -71,13 +71,60 @@ resource "aws_iam_user" "this" {
     - `aws_iam_user.this[0].name`
 
 
-#### 주의
+### 주의
 - `count` argument의 값은 apply 전에 정해져 있어야 함
 - 아래 예시와 같이 `count`에 apply 후에 정해지는 값이 있다면 error가 발생함
     - `count = aws_iam_group.this.name == "developer" : 1 : 2`
 
 
 ## 3. for_each
+- `count`와 동일하게 한 개의 resource block으로 여러 개의 동일한 resource type을 생성하고자 할 때 사용함
+    - `count`와 `for_each`는 resource block에서 동시에 사용할 수 없으므로 한 개만 선택해서 사용해야 함
+- `for_each`는 map 또는 set을 값으로 가질 수 있으며, map 또는 set을 통해 전달된 값의 갯수만큼 resource를 생성함
+
+
+### example
+
+- set을 사용하여 3개의 IAM user를 생성하는 코드
+```
+resource "aws_iam_user" "this" {
+    for_each = toset(["user1", "user2", "user3"])
+    name     = each.key
+}
+```
+
+- map을 사용하여 3개의 IAM user를 생성하는 코드
+```
+resource "aws_iam_user" "this" {
+    for_each = {
+        user1 = "tag1"
+        user2 = "tag2"
+        user3 = "tag3"
+    }
+    name     = each.key
+    tags     = {
+        tag = each.value
+    }
+}
+```
+
+
+### each object
+- `for_each`를 사용하여 resource를 생성하면 `each` object를 resource block 내에서 사용할 수 있음
+- `each` object를 통해 `each.key`, `each.value`를 사용할 수 있음
+    - `each.key`는 map 사용 시에는 key 값을, set 사용 시에는 member 값을 의미함
+    - `each.value`는 map 사용 시에는 value 값을, set 사용 시에는 `each.key`와 동일하게 member 값을 의미함
+
+
+### resource instance 참조
+- `for_each`를 사용하여 생성한 resource를 참조하기 위해서는 `<TYPE>.<NAME>[<KEY>]` 문법을 사용함
+    - set을 사용한 resource 참조 시 `aws_iam_user.this["user2"].name`
+    - map을 사용한 resource 참조 시 `aws_iam_user.this["user3"].name`
+
+
+### 주의
+- `count` argument와 마찬가지로 `for_each`의 값도 apply 전에 정해져 있어야 함
+- 그렇지 않으면 apply 시 error가 발생하니 주의해야 함
 
 
 ## 4. provider
