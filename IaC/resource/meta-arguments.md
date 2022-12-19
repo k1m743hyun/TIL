@@ -171,6 +171,70 @@ resource "aws_instance" "this" {
 
 
 ## 5. lifecycle
+- resource의 create, update, destroy에 관여하여 우리가 원하는 방식으로 동작을 수행하도록 변경할 때 사용함
+
+
+### example
+
+- create_before_destroy
+    - 특정 resource에 대해 update를 해야하나 제약사항에 의해 update가 불가능한 경우, 만들어진 resource를 삭제하고 update된 resource를 새로 만드는 방식으로 동작함
+    - `create_before_destroy` argument는 bool 값을 가지며 `true`로 설정하면, 먼저 update된 resource를 생성하고 기존의 resource를 삭제하는 방식으로 동작함
+    - 단, resource의 type에 따라 unique constraint 등 다른 제약들이 있어 불가능한 경우가 있으니, 사용하기 전에 확인해보고 사용하는 것을 추천함
+```
+resource "aws_instance" "this" {
+    ami           = var.ami_id
+    instance_type = var.instance_type
+    lifecycle {
+        create_before_destroy = true
+    }
+}
+```
+
+- prevent_destroy
+    - 생성된 resource들 중 destroy가 되는 것을 방지하고자 할 때 사용하는 argument
+    - `prevent_destroy`는 bool 값을 가지며 `true`로 설정하면 resource가 destroy되려고 할 때 error를 던짐
+        - `terraform destroy` 실행 시에도 적용이 됨
+```
+resource "aws_instance" "this" {
+    ami           = var.ami_id
+    instance_type = var.instance_type
+    lifecycle {
+        prevent_destroy = true
+    }
+}
+```
+
+- ignore_changes
+    - Terraform을 사용하여 infrastructure 구축 시 실제 적용되어 있는 resource 들의 값과 code로 작성되어 있는 값들을 비교하여 해당 resource의 create, update, destroy를 결정함
+    - 만약 특정 resource가 Terraform으로도 관리가 되고, Web Console이나 다른 곳에서도 함께 관리가 되고 있음
+        - 이런 식의 관리 방식은 추천하지 않음
+        - Terraform을 사용한다면, Terraform을 통해서만 관리하는 것이 가장 좋은 방법
+    - 누군가 Web Console에서 resource의 어떤 값을 바꾸었다면 Terraform 수행 시 해당 값이 변경된 것을 확인하고 code에 있는 값으로 다시 원복시키려 함
+    - 이런 상황을 피하기 위해 사용되는 argument
+        - 다른 여러 이유로도 사용되는 경우도 있음
+    - `ignore_changes`는 list 값을 가지며, list에 작성된 arguments를 Terraform이 비교하는 대상에서 제외시켜 update를 하지 않음
+    - 비교 대상에서 제외하고자 하는 argument를 list에 작성함
+    ```
+    resource "" "" {
+        ami           = var.ami_id
+        instance_type = var.instance_type
+        lifecycle {
+            ignore_changes = [
+                instance_type
+            ]
+        }
+    }
+    ```
+    - 모든 argument를 비교 대상에서 제외하도록 작성함
+    ```
+        resource "" "" {
+        ami           = var.ami_id
+        instance_type = var.instance_type
+        lifecycle {
+            ignore_changes = all
+        }
+    }
+    ```
 
 
 # 출처
