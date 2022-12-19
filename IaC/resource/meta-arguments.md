@@ -128,6 +128,46 @@ resource "aws_iam_user" "this" {
 
 
 ## 4. provider
+- AWS infrastructure를 구성하다보면 종종 다른 configuration으로 resource를 생성해야하는 경우가 생길 때 사용함
+    - 예를 들면, 다른 region에 resource를 생성함
+
+
+### example
+
+- default configuration
+```
+provider "aws" {
+    region = "us-east-1"
+}
+```
+
+- alternate configuration
+    - provider 당 default configuration은 반드시 1개만 선언할 수 있기 때문에 alias를 이용하여 alternate configuration을 생성함
+```
+provider "aws" {
+    alias  = "seoul"
+    region = "ap-northeast-2"
+}
+```
+
+- default configuration을 사용하는 resorce 생성
+    - provider를 선언하지 않고 생성함
+```
+resource "aws_instance" "this" {
+    ami           = var.ami_id
+    instance_type = var.instance_type
+}
+```
+
+- alternate configuration을 사용하는 resource 생성
+    - provider를 선언하여 원하는 configuration으로 생성함
+```
+resource "aws_instance" "this" {
+    provider      = aws.seoul
+    ami           = var.ami_id
+    instance_type = var.instance_type
+}
+```
 
 
 ## 5. lifecycle
