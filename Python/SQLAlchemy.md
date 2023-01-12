@@ -23,10 +23,24 @@
 
 
 ### SQLAlchemy 설치
-
-
 ```
 $ pip install sqlalchemy
+```
+
+### Python에서 SQLAlchemy 시작하기
+```
+import sqlalchemy
+```
+```
+from sqlalchemy import *
+```
+
+
+### DB 연결하기
+```
+from sqlalchemy import create_engine
+
+engine = create_engine('{DB 정보}', echo=True)
 ```
 
 
