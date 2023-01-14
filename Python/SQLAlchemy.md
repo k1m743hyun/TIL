@@ -36,11 +36,20 @@ from sqlalchemy import *
 ```
 
 
-### DB 연결하기
+### 드라이버(Engine) 로드
 ```
 from sqlalchemy import create_engine
 
 engine = create_engine('{DB 정보}', echo=True)
+```
+
+
+### 세션(Session) 연결
+```
+from sqlalchemy.orm import sessionmaker
+
+Session = sessionmaker(engine)
+session = Session()
 ```
 
 
