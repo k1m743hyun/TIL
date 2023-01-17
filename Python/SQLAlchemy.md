@@ -56,3 +56,4 @@ session = Session()
 # 출처
 - [SQLAlchemy 그것이 알고싶다](https://ulfrid.github.io/python/python-sqlalchemy/)
 - [SQLAlchemy 소개 및 활용법](https://seokhyun2.tistory.com/84)
+- [[SQLAlchemy] Python ORM](https://hooni-playground.com/596/)
