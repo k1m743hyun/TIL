@@ -18,6 +18,14 @@
 $ terraform import 'module.ec2.aws_instance.this["web"]' i-12345678
 ```
 
+### AWS Security Group Rule을 Import 할 경우
+- `security_group_id`, `type`, `protocol`, `from_port`, `to_port`, `cidr_block`을 underscore(`_`)로 연결하여야 함
+
+```
+$ terraform import "module.rds.aws_security_group_rule.ingress[\"https\"]" sg-000000000_ingress_tcp_443_443_000.000.000.000/32
+```
+
 
 # 출처
 - [기존에 사용 중인 인프라를 Terraform으로 가져오기](https://blog.outsider.ne.kr/1292)
+- [Resource: aws_security_group_rule](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule.html)
