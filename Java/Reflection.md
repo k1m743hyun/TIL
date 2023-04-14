@@ -3,7 +3,7 @@
 
 ## Java Reflection이란?
 - JVM 힙 메모리에 ClassLoader를 통해서 Class 정보가 저장이 됨
-  - 자세한 내용은 [JVM ClassLoader](https://github.com/k1m743hyun/TIL/blob/main/Java/JVM%20ClassLoader.md)) 참고
+  - 자세한 내용은 [JVM ClassLoader](https://github.com/k1m743hyun/TIL/blob/main/Java/JVM%20ClassLoader.md) 참고
 - JVM에 저장된 Class 정보가 마치 거울에 투영된 모습과 같음
 - Reflection을 사용하면 접근 제어자와 무관하게 클래스에 대한 정보를 자세하게 알 수 있고 직접 호출도 할 수 있음
 - Reflection의 대표적인 예시는 프레임워크에서 사용되는 어노테이션임
